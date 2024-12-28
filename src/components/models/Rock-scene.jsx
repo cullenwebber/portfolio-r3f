@@ -115,13 +115,14 @@ function Logo({ nodes }) {
 
 function VideoText(props) {
 	const [video] = useState(() =>
-		Object.assign(document.createElement("video"), {
-			src: "/video.mp4",
-			crossOrigin: "Anonymous",
-			loop: true,
-			muted: true,
-		})
-	);
+    Object.assign(document.createElement("video"), {
+       src: "/video.mp4",
+       crossOrigin: "Anonymous",
+       loop: true,
+       muted: true,
+       playsInline: true, // Add this attribute
+    })
+ );
 	useEffect(() => void video.play(), [video]);
 
 	const videoTexture = new THREE.VideoTexture(video);
