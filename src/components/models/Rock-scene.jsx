@@ -28,22 +28,11 @@ export function Model(props) {
 			/>
 			<ReflectiveWater />
 			<VideoText position={[0, 3, -8]} />
-			<mesh geometry={nodes.Teleporter.geometry} position={[0, -0.1, 0]}>
-				<MeshTransmissionMaterial
-					transmission={0.5}
-					color={"#878787"}
-					backside
-					backsideThickness={10}
-					thickness={2}
-					roughness={0.05}
-					anisotropicBlur={0}
-					backsideResolution={0}
-				/>
-			</mesh>
+			<Teleporter nodes={nodes} />
 
 			<Wires nodes={nodes} />
 
-			<mesh geometry={nodes.Light.geometry} position={[0, 0.3, 0]}>
+			{/* <mesh geometry={nodes.Light.geometry} position={[0, 0.3, 0]}>
 				<meshPhysicalMaterial
 					color={"#50DDFF"}
 					roughness={0.5}
@@ -51,9 +40,9 @@ export function Model(props) {
 					emissive={"#50DDFF"}
 					emissiveIntensity={1}
 				/>
-			</mesh>
+			</mesh> */}
 			<mesh geometry={nodes.Light.geometry} position={[0, 0.1, 0]}>
-				<meshPhysicalMaterial color={"#000000"} roughness={1.0} metalness={0} />
+				<meshBasicMaterial color={"#000000"} />
 			</mesh>
 
 			<Float
@@ -113,19 +102,19 @@ function Logo({ nodes }) {
 
 // Define the custom shader material
 const WireShaderMaterial = shaderMaterial(
-  // Uniforms
-  {
-    time: 0, // To animate the emission
-    speed: 1, // Speed of the emission flow
-    stripWidth: 0.1, // Width of the emission strip
-    baseColor: new THREE.Color(0x010101), // Dark gray-black base color
-    emissionColor: new THREE.Color(0x50ddff), // Cool blue emission color
-    metallic: 0.9, // High metallic factor
-    roughness: 0.3, // Slightly rough surface
-    tint: new THREE.Color(0x020202), // Subtle blue tint for the reflections
-  },
-  // Vertex Shader
-  `
+	// Uniforms
+	{
+		time: 0, // To animate the emission
+		speed: 1, // Speed of the emission flow
+		stripWidth: 0.1, // Width of the emission strip
+		baseColor: new THREE.Color(0x010101), // Dark gray-black base color
+		emissionColor: new THREE.Color(0x50ddff), // Cool blue emission color
+		metallic: 0.9, // High metallic factor
+		roughness: 0.3, // Slightly rough surface
+		tint: new THREE.Color(0x020202), // Subtle blue tint for the reflections
+	},
+	// Vertex Shader
+	`
     varying vec2 vUv; // Pass UV coordinates to the fragment shader
     varying vec3 vNormal; // Pass normal to the fragment shader
     varying vec3 vViewDir; // View direction for fresnel effect
@@ -138,8 +127,8 @@ const WireShaderMaterial = shaderMaterial(
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
-  // Fragment Shader
-  `
+	// Fragment Shader
+	`
     uniform float time;
     uniform float speed;
     uniform float stripWidth;
@@ -189,19 +178,19 @@ const WireShaderMaterial = shaderMaterial(
 
 // Define the custom shader material
 const WireShaderMaterialSmall = shaderMaterial(
-  // Uniforms
-  {
-    time: 0, // To animate the emission
-    speed: 0.5, // Speed of the emission flow
-    stripWidth: 0.01, // Width of the emission strip
-    baseColor: new THREE.Color(0x010101), // Dark gray-black base color
-    emissionColor: new THREE.Color(0x50ddff), // Cool blue emission color
-    metallic: 0.9, // High metallic factor
-    roughness: 0.3, // Slightly rough surface
-    tint: new THREE.Color(0x0e131c), // Subtle blue tint for the reflections
-  },
-  // Vertex Shader
-  `
+	// Uniforms
+	{
+		time: 0, // To animate the emission
+		speed: 0.5, // Speed of the emission flow
+		stripWidth: 0.01, // Width of the emission strip
+		baseColor: new THREE.Color(0x010101), // Dark gray-black base color
+		emissionColor: new THREE.Color(0x50ddff), // Cool blue emission color
+		metallic: 0.9, // High metallic factor
+		roughness: 0.3, // Slightly rough surface
+		tint: new THREE.Color(0x0e131c), // Subtle blue tint for the reflections
+	},
+	// Vertex Shader
+	`
     varying vec2 vUv; // Pass UV coordinates to the fragment shader
     varying vec3 vNormal; // Pass normal to the fragment shader
     varying vec3 vViewDir; // View direction for fresnel effect
@@ -214,8 +203,8 @@ const WireShaderMaterialSmall = shaderMaterial(
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
-  // Fragment Shader
-  `
+	// Fragment Shader
+	`
     uniform float time;
     uniform float speed;
     uniform float stripWidth;
@@ -244,7 +233,7 @@ const WireShaderMaterialSmall = shaderMaterial(
       float combinedStrip = max(strip1, strip2);
 
       // Fresnel effect for metallic look
-      float fresnel = pow(1.0 - dot(vNormal, vViewDir), 8.0);
+      float fresnel = pow(1.0 - dot(vNormal, vViewDir), 1.0);
 
       // Add roughness-based shading
       float roughnessFactor = 1.0 - roughness;
@@ -267,6 +256,25 @@ const WireShaderMaterialSmall = shaderMaterial(
 extend({ WireShaderMaterial });
 extend({ WireShaderMaterialSmall });
 
+function Teleporter({ nodes }) {
+	return (
+		<mesh geometry={nodes.Teleporter.geometry} position={[0, -0.1, 0]}>
+			<MeshReflectorMaterial
+				blur={[100, 100]}
+				mixBlur={1.0}
+				mixStrength={180}
+				resolution={2048}
+				roughness={1.0}
+				depthScale={12}
+				minDepthThreshold={0.5}
+				maxDepthThreshold={0.6}
+				color="#555555"
+				metalness={0.6}
+			/>
+		</mesh>
+	);
+}
+
 function Wires({ nodes }) {
 	useFrame((state) => {
 		// Update the time uniform for the animation
@@ -278,7 +286,7 @@ function Wires({ nodes }) {
 	});
 	return (
 		<>
-			<mesh geometry={nodes.Wiresmall.geometry} position={[9.5, 0.047, -5]}>
+			<mesh geometry={nodes.Wiresmall.geometry} position={[9.5, -0.2, -5]}>
 				<wireShaderMaterialSmall />
 			</mesh>
 			<mesh
