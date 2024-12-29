@@ -7,6 +7,7 @@ import { BlackEnvMat } from "@/components/materials/BlackEnvMat";
 export function Teleporter({ nodes }) {
 	const materialRef = useRef(null);
 
+	const material = BlackEnvMat();
 	useFrame((state, delta) => {
 		materialRef.current.uTime += delta * 2.0;
 	});
@@ -24,10 +25,18 @@ export function Teleporter({ nodes }) {
 				/>
 			</mesh>
 			<mesh
+				geometry={nodes.pipe001.geometry}
+				material={material}
+				position={[2.215, -0.182, -0.06]}
+				rotation={[0, 0, -3.141]}
+				scale={0.073}
+			/>
+
+			<mesh
 				geometry={nodes.Teleporter.geometry}
-				material={BlackEnvMat()}
+				material={material}
 				position={[0, -0.1, 0]}
-				rotation={[0, Math.PI, 0]}
+				rotation={[0, Math.PI / 4, 0]}
 			></mesh>
 		</>
 	);

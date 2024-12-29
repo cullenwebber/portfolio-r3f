@@ -62,12 +62,12 @@ export function Barrels({ nodes }) {
 
 			data.phase += delta * data.floatSpeed;
 
-			const floatOffset = Math.sin(data.phase * 1.25) * 0.03;
+			const floatOffset = Math.sin(data.phase * 1.25) * 0.04;
 			dummyPos.y = positions[i][1] + floatOffset;
 
 			euler.copy(data.originalEuler);
 
-			const tiltAmplitude = 0.03; // how strong you want the tilt
+			const tiltAmplitude = 0.04; // how strong you want the tilt
 			euler.x += Math.sin(data.phase * 0.5) * tiltAmplitude;
 			dummyQuat.setFromEuler(euler);
 
