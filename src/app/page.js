@@ -12,32 +12,38 @@ import {
 	Noise,
 	Scanline,
 } from "@react-three/postprocessing";
-import { Environment } from "@react-three/drei";
-
-function SpotLightWithHelper() {
-	const lightRef = useRef();
-
-	return (
-		<spotLight
-			ref={lightRef}
-			decay={0}
-			position={[0, 60, 10]}
-			angle={0.12}
-			penumbra={1}
-			intensity={0.5}
-			castShadow
-			shadow-mapSize={1024}
-			color={"#50DDFF"}
-		/>
-	);
-}
 
 export default function Home() {
 	return (
-		<div className="h-lvh w-full">
+		<div className="h-lvh w-full relative">
+			<div className="absolute top-4 left-4">
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid h-3 w-[1px]"></div>
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid w-3 h-[1px]"></div>
+			</div>
+			<div className="absolute bottom-4 left-4">
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid h-3 w-[1px]"></div>
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid w-3 h-[1px]"></div>
+			</div>
+			<div className="absolute bottom-4 right-4">
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid h-3 w-[1px]"></div>
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid w-3 h-[1px]"></div>
+			</div>
+			<div className="absolute top-4 right-4">
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid h-3 w-[1px]"></div>
+				<div className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 border-white border-t border-r z-30 border-solid w-3 h-[1px]"></div>
+			</div>
 			<Canvas className="h-lvh">
 				<color attach="background" args={["black"]} />
-				<SpotLightWithHelper />
+				<spotLight
+					decay={0}
+					position={[0, 60, 10]}
+					angle={0.12}
+					penumbra={1}
+					intensity={0.5}
+					castShadow
+					shadow-mapSize={1024}
+					color={"#50DDFF"}
+				/>
 				<EffectComposer disableNormalPass>
 					<Bloom
 						luminanceThreshold={0.6}

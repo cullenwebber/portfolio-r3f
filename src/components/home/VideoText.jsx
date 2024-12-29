@@ -3,35 +3,43 @@ import { useState, useEffect } from "react";
 import * as THREE from "three";
 
 export function VideoText(props) {
-	const [video] = useState(() =>
-		Object.assign(document.createElement("video"), {
-			src: "/video.mp4",
-			crossOrigin: "Anonymous",
-			loop: true,
-			muted: true,
-			playsInline: true, // Add this attribute
-		})
-	);
-	useEffect(() => void video.play(), [video]);
+  // Initialize the video element
+  const [video] = useState(() =>
+    Object.assign(document.createElement("video"), {
+      src: "/video.mp4",
+      crossOrigin: "Anonymous",
+      loop: true,
+      muted: true,
+      playsInline: true,
+    })
+  );
 
-	const videoTexture = new THREE.VideoTexture(video);
-	videoTexture.encoding = THREE.sRGBEncoding;
+  
+  useEffect(() => {
+    video.play();
+  }, [video]);
 
-	return (
-		<Text
-			font="/bootzy.ttf"
-			fontSize={9}
-			letterSpacing={0}
-			geometryArgs={{ uvGenerator: null }} // Ensure proper UV mapping
-			{...props}
-		>
-			COMPLICIT*
-			<meshStandardMaterial
-				toneMapped={false}
-				emissive={"#50DDFF"}
-				emissiveIntensity={2}
-				emissiveMap={videoTexture}
-			/>
-		</Text>
-	);
+  // Create a video texture
+  const videoTexture = new THREE.VideoTexture(video);
+  videoTexture.minFilter = THREE.LinearFilter;
+  videoTexture.magFilter = THREE.LinearFilter;
+  videoTexture.format = THREE.RGBAFormat;
+
+  return (
+    <Text
+      font="/bootzy.ttf"
+      fontSize={9}
+      letterSpacing={0}
+
+      {...props}
+    >
+      COMPLICIT*
+      <meshStandardMaterial
+        emissiveMap={videoTexture}
+        toneMapped={false}
+        emissive="#50DDFF"
+        emissiveIntensity={2}
+      />
+    </Text>
+  );
 }
