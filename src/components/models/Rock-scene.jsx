@@ -22,6 +22,7 @@ export function Model(props) {
 			<Teleporter nodes={nodes} />
 			<Wires nodes={nodes} />
 			<Barrels nodes={nodes} />
+      
 			<mesh geometry={nodes.Light.geometry} position={[0, 0.3, 0]}>
 				<meshPhysicalMaterial
 					color={"#50DDFF"}

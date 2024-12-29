@@ -12,7 +12,7 @@ export function Barrels({ nodes }) {
 	];
 	const rotations = [
 		[0, 0, -0.379],
-		[0, 1.105, -1.836],
+		[0, 1.105, -1.536],
 		[0, -0.849, -1.961],
 		[0, 0, 0.262],
 	];
@@ -67,8 +67,8 @@ export function Barrels({ nodes }) {
 
 			euler.copy(data.originalEuler);
 
-			const tiltAmplitude = 0.02; // how strong you want the tilt
-			euler.x += Math.sin(data.phase) * tiltAmplitude;
+			const tiltAmplitude = 0.03; // how strong you want the tilt
+			euler.x += Math.sin(data.phase * 0.5) * tiltAmplitude;
 			dummyQuat.setFromEuler(euler);
 
 			dummyMatrix.compose(dummyPos, dummyQuat, dummyScale);
