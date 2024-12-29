@@ -62,7 +62,7 @@ export function Barrels({ nodes }) {
 
 			data.phase += delta * data.floatSpeed;
 
-			const floatOffset = Math.sin(data.phase) * 0.02;
+			const floatOffset = Math.sin(data.phase) * 0.03;
 			dummyPos.y = positions[i][1] + floatOffset;
 
 			euler.copy(data.originalEuler);
