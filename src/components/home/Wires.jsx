@@ -96,7 +96,7 @@ const WireShaderMaterial = shaderMaterial(
       float combinedStrip = max(strip1, strip2);
 
       // Fresnel effect for metallic look
-      float fresnel = pow(1.0 - dot(vNormal, vViewDir), 10.0);
+      float fresnel = pow(1.0 - dot(vNormal, vViewDir), 8.0);
 
       // Add roughness-based shading
       float roughnessFactor = 1.0 - roughness;
