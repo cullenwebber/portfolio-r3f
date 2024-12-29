@@ -22,7 +22,7 @@ export function Model(props) {
 			<Teleporter nodes={nodes} />
 			<Wires nodes={nodes} />
 			<Barrels nodes={nodes} />
-      
+
 			<mesh geometry={nodes.Light.geometry} position={[0, 0.3, 0]}>
 				<meshPhysicalMaterial
 					color={"#50DDFF"}
@@ -40,7 +40,7 @@ export function Model(props) {
 				speed={3}
 				rotationIntensity={1}
 				floatIntensity={1}
-				floatingRange={[-0.15, 0.15]}
+				floatingRange={[-0.25, 0.25]}
 			>
 				<Logo nodes={nodes} />
 			</Float>

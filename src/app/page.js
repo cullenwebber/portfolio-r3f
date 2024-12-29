@@ -43,7 +43,7 @@ export default function Home() {
 						luminanceThreshold={0.6}
 						mipmapBlur
 						luminanceSmoothing={0}
-						intensity={0.9}
+						intensity={0.6}
 					/>
 					<Noise opacity={0.6} blendFunction={BlendFunction.SOFT_LIGHT} />
 					<Scanline opacity={0.4} blendFunction={BlendFunction.SOFT_LIGHT} />

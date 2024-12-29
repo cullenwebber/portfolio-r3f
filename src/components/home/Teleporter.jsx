@@ -27,6 +27,7 @@ export function Teleporter({ nodes }) {
 				geometry={nodes.Teleporter.geometry}
 				material={BlackEnvMat()}
 				position={[0, -0.1, 0]}
+				rotation={[0, Math.PI, 0]}
 			></mesh>
 		</>
 	);
