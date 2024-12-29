@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import * as THREE from "three";
-import { shaderMaterial, MeshReflectorMaterial } from "@react-three/drei";
+import { shaderMaterial } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
+import { BlackEnvMat } from "@/components/materials/BlackEnvMat";
 
 export function Teleporter({ nodes }) {
 	const materialRef = useRef(null);
+
 	useFrame((state, delta) => {
 		materialRef.current.uTime += delta * 2.0;
 	});
@@ -21,13 +23,11 @@ export function Teleporter({ nodes }) {
 					uColor="#50DDFF"
 				/>
 			</mesh>
-			<mesh geometry={nodes.Teleporter.geometry} position={[0, -0.1, 0]}>
-				<meshStandardMaterial
-					color={"#414141"}
-					roughness={0.6}
-					metalness={0.8}
-				/>
-			</mesh>
+			<mesh
+				geometry={nodes.Teleporter.geometry}
+				material={BlackEnvMat()}
+				position={[0, -0.1, 0]}
+			></mesh>
 		</>
 	);
 }

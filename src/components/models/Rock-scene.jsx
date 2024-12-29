@@ -5,9 +5,10 @@ import { Logo } from "@/components/home/Logo";
 import { ReflectiveWater } from "@/components/home/ReflectiveWater";
 import { Wires } from "@/components/home/Wires";
 import { Teleporter } from "@/components/home/Teleporter";
+import { Barrels } from "@/components/home/Barrels";
 
 export function Model(props) {
-	const { nodes, materials } = useGLTF("/rock-scene.glb");
+	const { nodes, materials } = useGLTF("/rock-scene-2.glb");
 
 	return (
 		<group {...props} dispose={null}>
@@ -20,7 +21,7 @@ export function Model(props) {
 			<VideoText position={[0, 3, -8]} />
 			<Teleporter nodes={nodes} />
 			<Wires nodes={nodes} />
-
+			<Barrels nodes={nodes} />
 			<mesh geometry={nodes.Light.geometry} position={[0, 0.3, 0]}>
 				<meshPhysicalMaterial
 					color={"#50DDFF"}
@@ -46,4 +47,4 @@ export function Model(props) {
 	);
 }
 
-useGLTF.preload("/rock-scene.glb");
+useGLTF.preload("/rock-scene-2.glb");
