@@ -20,8 +20,8 @@ export function Barrels({ nodes }) {
 
 	// Per-instance data for floating + tilting
 	const instanceData = positions.map((_, i) => ({
-		phase: Math.random() * Math.PI * 2, // random offset for the sine wave
-		floatSpeed: 2.0 + Math.random() * 1.0, // random float speed
+		phase: i * Math.PI / 2, // random offset for the sine wave
+		floatSpeed: 2.0, // random float speed
 		// We'll store each barrel's original rotation as an Euler
 		originalEuler: new THREE.Euler(...rotations[i]),
 	}));
@@ -62,7 +62,7 @@ export function Barrels({ nodes }) {
 
 			data.phase += delta * data.floatSpeed;
 
-			const floatOffset = Math.sin(data.phase) * 0.03;
+			const floatOffset = Math.sin(data.phase * 1.25) * 0.03;
 			dummyPos.y = positions[i][1] + floatOffset;
 
 			euler.copy(data.originalEuler);
