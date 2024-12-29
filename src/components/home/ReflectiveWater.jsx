@@ -27,7 +27,7 @@ export function ReflectiveWater() {
 		// 1) Update reflection distortion (as you already do)
 		if (meshRef.current?.material) {
 			meshRef.current.material.distortion =
-				1 + 2.0 * (1 + Math.sin(time + Math.PI / 4));
+				0.7 + 1.0 * (1 + Math.sin(time * 1.5 + Math.PI / 4));
 		}
 
 		// 2) Update vertex positions for a wavy effect, but never go below base Z
@@ -77,7 +77,7 @@ export function ReflectiveWater() {
 				color="#555555"
 				metalness={0.6}
 				distortionMap={waterBump}
-				distortion={0.3}
+				distortion={0.1}
 			/>
 		</mesh>
 	);
