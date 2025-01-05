@@ -55,3 +55,5 @@ export const Logo = forwardRef((props, ref) => {
         </Float>
 	);
 });
+
+Logo.displayName = "Logo";
