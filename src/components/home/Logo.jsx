@@ -1,18 +1,28 @@
-import { useRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial } from "@react-three/drei";
+import { MeshTransmissionMaterial, Float } from "@react-three/drei";
 
-export function Logo({ nodes }) {
-	const logoRef = useRef();
+export const Logo = forwardRef((props, ref) => {
+	const { nodes, ...restProps } = props;
+	const internalRef = useRef();
+
+	// Use either the forwarded ref or the internal ref
+	const resolvedRef = ref || internalRef;
 
 	useFrame(() => {
-		if (logoRef.current) {
-			logoRef.current.rotation.y += 0.02;
+		if (resolvedRef.current) {
+			resolvedRef.current.rotation.y += 0.02;
 		}
 	});
 
 	return (
-		<group ref={logoRef}>
+        <Float
+        speed={3}
+        rotationIntensity={1}
+        floatIntensity={1}
+        floatingRange={[-0.25, 0.25]}
+    >
+		<group ref={resolvedRef} {...restProps}>
 			<mesh geometry={nodes.logobottom.geometry}>
 				<MeshTransmissionMaterial
 					backside
@@ -42,5 +52,6 @@ export function Logo({ nodes }) {
 				/>
 			</mesh>
 		</group>
+        </Float>
 	);
-}
+});

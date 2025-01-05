@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { useRef, useLayoutEffect } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useRef, useEffect } from "react";
+import { extend, useFrame } from "@react-three/fiber";
 import { BlackEnvMat } from "../materials/BlackEnvMat";
 
 export function Barrels({ nodes }) {
@@ -19,18 +19,20 @@ export function Barrels({ nodes }) {
 	const scales = [0.597, 0.597, 0.597, 0.597];
 
 	// Per-instance data for floating + tilting
-	const instanceData = positions.map((_, i) => ({
-		phase: i * Math.PI / 2, // random offset for the sine wave
-		floatSpeed: 2.0, // random float speed
-		// We'll store each barrel's original rotation as an Euler
-		originalEuler: new THREE.Euler(...rotations[i]),
-	}));
+	const instanceDataRef = useRef(
+		positions.map((_, i) => ({
+			phase: (i * Math.PI) / 2,
+			floatSpeed: 2.0,
+			originalEuler: new THREE.Euler(...rotations[i]),
+		}))
+	);
 
 	const instancedRef = useRef();
 	const material = BlackEnvMat();
+	extend({ material });
 
 	// Set up each instance's base transform (position, rotation, scale)
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const dummyMatrix = new THREE.Matrix4();
 
 		for (let i = 0; i < positions.length; i++) {
@@ -43,7 +45,9 @@ export function Barrels({ nodes }) {
 		}
 
 		instancedRef.current.instanceMatrix.needsUpdate = true;
-	}, []);
+
+		console.log("use FootGun");
+	});
 
 	useFrame((state, delta) => {
 		if (!instancedRef.current) return;
@@ -53,6 +57,7 @@ export function Barrels({ nodes }) {
 		const dummyQuat = new THREE.Quaternion();
 		const dummyScale = new THREE.Vector3();
 		const euler = new THREE.Euler();
+		const instanceData = instanceDataRef.current;
 
 		for (let i = 0; i < positions.length; i++) {
 			instancedRef.current.getMatrixAt(i, dummyMatrix);
