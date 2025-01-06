@@ -65,7 +65,7 @@ export function ReflectiveWater() {
 		>
 			{/* Provide enough segments for a smooth wave */}
 			<planeGeometry args={[20, 20, 128, 128]} />
-			<MeshReflectorMaterial
+			{/* <MeshReflectorMaterial
 				blur={[20, 20]}
 				mixBlur={1.0}
 				mixStrength={160}
@@ -78,7 +78,7 @@ export function ReflectiveWater() {
 				metalness={0.6}
 				distortionMap={waterBump}
 				distortion={0.1}
-			/>
+			/> */}
 		</mesh>
 	);
 }

@@ -11,12 +11,15 @@ import {
 } from "@react-three/postprocessing";
 import HomeScene from "@/components/home/HomeScene";
 import { RefProvider } from "@/components/home/RefProvider";
+import { Perf } from 'r3f-perf'
+
 
 export default function Home() {
 	return (
 		<div className="h-lvh w-full relative">
 			<RefProvider>
 				<Canvas className="h-lvh canvas-container">
+          <Perf/>
 					<EffectComposer disableNormalPass>
 						<Bloom
 							luminanceThreshold={0.6}
