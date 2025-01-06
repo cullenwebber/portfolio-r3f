@@ -28,6 +28,11 @@ export const TransitionMaterial = shaderMaterial(
       float waveFrequency = 40.0;  // Control frequency of the waves
       float waveSpeed = 1.0;      // Control speed of the wave animation
 
+      float frequency = 10.0;      // Number of waves along the x-axis
+      float amplitude = 0.03;      // Height of the wave
+      float speed = 1.0;           // Animation speed of the wave
+      float edgeSoftness = 0.0;   // Softness of the wave edges
+
       vec2 ripple = vec2(
         sin(uv.y * waveFrequency + time * waveSpeed),
         cos(uv.x * waveFrequency * 2.0 + time * waveSpeed)
@@ -39,7 +44,9 @@ export const TransitionMaterial = shaderMaterial(
       vec4 _texture2 = texture2D(tex2, distortedUv); // Apply distortion to tex2
 
       vec4 finalTexture;
-      finalTexture = mix(_texture2, _texture, step(progression, uv.y));
+      float wave = (sin(-uv.x * frequency + time * speed) + sin(uv.x * frequency * 1.5 + time * 0.5 * speed * 0.75))  * amplitude * 0.5;
+      float transition = smoothstep(progression + wave - edgeSoftness, progression + wave + edgeSoftness, uv.y);
+      finalTexture = mix(_texture2, _texture, transition);
 
       gl_FragColor = finalTexture;
     }`

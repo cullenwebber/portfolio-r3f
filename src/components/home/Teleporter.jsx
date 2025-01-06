@@ -92,9 +92,13 @@ const CylinderShader = shaderMaterial(
       alphaBase = clamp(alphaBase, 0.0, 1.0);
 
       // Combine the two alpha contributions
-      float alpha = alphaBase * abs(sin(uTime * 0.5));
+      float alpha = alphaBase * clamp(sin(uTime * 0.5), 0.75, 1.0);
 
-      gl_FragColor = vec4(uColor, alpha);
+	   float brightness = 4.0; // Increase this value to make it brighter
+    	vec3 brightColor = uColor * brightness;
+
+
+      gl_FragColor = vec4(brightColor, alpha);
     }
   `
 );
