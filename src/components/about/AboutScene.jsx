@@ -16,7 +16,7 @@ export default function AboutScene() {
 		<>
 
 			<UnderWaterLight
-				intensity={1}
+				intensity={5}
 				angle={0.6}
 				penumbra={1}
 				position={[0, 0, 10]}

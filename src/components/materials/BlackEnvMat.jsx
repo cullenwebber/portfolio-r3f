@@ -6,9 +6,9 @@ export function BlackEnvMat() {
 	const exrTexture = useLoader(EXRLoader, "/hdri.exr");
 	exrTexture.mapping = THREE.EquirectangularReflectionMapping;
 	const material = new THREE.MeshPhysicalMaterial({
-		metalness: 1.0,
-		roughness: 0.2,
-		color: "black",
+		metalness: 0.5,
+		roughness: 0.1,
+		color: "#666666",
 		envMap: exrTexture,
 		envMapIntensity: 0.8,
 	});

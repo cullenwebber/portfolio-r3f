@@ -206,7 +206,7 @@ export default function HomeScene() {
 					position={[0, 60, 10]}
 					angle={0.1}
 					penumbra={1}
-					intensity={0.35}
+					intensity={5.0}
 					color={"#50DDFF"}
 				/>
 				<Model />
